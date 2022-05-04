@@ -1,0 +1,64 @@
+<div class="h-100 p-5 text-white bg-dark rounded-3">
+  <h2>Phonebook</h2>
+  <p>Manage your list</p>
+  <div class="input-group mb-3">
+    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" [(ngModel)]="searchterm">
+    <span class="input-group-text">Search</span>
+  </div>
+</div>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">firstName</th>
+      <th scope="col">lastName</th>
+      <th scope="col">Contact</th>
+      <th scope="col">Delete</th>
+      <th scope="col">Edit</th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-template ngFor let-get [ngForOf]="data |filter:searchterm" let-i="index" let-even="even">
+    <tr >
+      <th scope="row">{{i+1}}</th>
+      <td>{{get.firstName}}</td>
+      <td>{{get.lastName}}</td>
+      <td>{{get.phone}}</td>
+      <td><button type="button" class="btn btn-danger btn-sm" (click)="delete_from_list(i,get)">Delete</button></td>
+      <td><button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#myModal" (click)="edit_from_list(i,get)">Edit</button></td>
+    </tr>
+  </ng-template>
+  </tbody>
+</table>
+<div class="modal fade" id="myModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Edit</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+    
+      <div class="modal-body">
+        <form [formGroup]="reactive_form" (ngSubmit)="onSubmit()">
+          <div class="mb-3 mt-3">
+            <label for="firstName" class="form-label">First Name:</label>
+            <input type="text" class="form-control"  placeholder="Enter First Name" name="firstName"   formControlName="firstName">
+          </div>
+          <div class="mb-3">
+            <label for="lastName" class="form-label">Last Name:</label>
+            <input type="text" class="form-control" placeholder="Enter Last Name" name="lastName"    formControlName="lastName">
+          </div>
+          <div class="mb-3 mt-3">
+            <label for="phone" class="form-label">Email:</label>
+            <input type="number" class="form-control"  placeholder="Enter Phone" name="phone" formControlName="phone">
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Submit</button>
+          </div>
+        </form>
+      </div>
+ 
+    
+    </div>
+  </div>
+</div>
